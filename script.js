@@ -1,6 +1,6 @@
 const gridContainer = document.createElement('div');
 gridContainer.id = "container";
-document.querySelector('body').appendChild(gridContainer);
+document.querySelector('#mainContainer').appendChild(gridContainer);
 
 
 
@@ -23,5 +23,17 @@ function createGridItems(row) {
         row.appendChild(gridItem);
     }
 }
-let userPrompt = 20;
+
+function resetGrid() {
+    userPrompt = prompt("How many squares on each side?");
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.firstChild)
+    }
+    createRows(gridContainer);
+}
+let userPrompt = 16;
 createRows(gridContainer);
+
+const changeGridBtn = document.querySelector("#changeGridBtn");
+changeGridBtn.addEventListener("click", resetGrid);
+
