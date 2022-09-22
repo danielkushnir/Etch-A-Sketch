@@ -10,6 +10,8 @@ for (let i = 0; i < 16; i++) {
 
 for (let i = 0; i < grid.length; i++) {
     grid[i].classList.add("grid-item");
-    grid[i].textContent = i + 1;
+    grid[i].addEventListener('mouseover', () => {
+        grid[i].classList.add("etched");
+    });
     gridContainer.appendChild(grid[i]);
 }
