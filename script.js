@@ -23,5 +23,5 @@ function createGridItems(row) {
         row.appendChild(gridItem);
     }
 }
-let userPrompt = 50;
+let userPrompt = 20;
 createRows(gridContainer);

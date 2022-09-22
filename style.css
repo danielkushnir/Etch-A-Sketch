@@ -3,35 +3,36 @@
     padding: 0;
 }
 
+body {
+    background-color: #df2020;
+}
+
 h1 {
     text-align: center;
 }
 
 #container {
+    background-color: #fff;
     border: 1px black solid;
     text-align: center;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 1000px;
+    width: 600px;
+    height: 600px;
     margin: 0 auto;
     flex-flow: column wrap;
 }
 
 .row {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex: 1 1 auto;
 }
 
 .grid-item {
-    /* border: 1px solid black; */
-    margin: 1px;
-    background-color: antiquewhite;
+
     flex: 1 1 auto;
-    min-height: 12px;
-    min-width: 12px;
+    min-height: 1px;
+    min-width: 1px;
 }
 
 .etched {
