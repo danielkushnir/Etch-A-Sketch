@@ -18,19 +18,23 @@ function createGridItems(row) {
         let gridItem = document.createElement('div');
         gridItem.classList.add('grid-item');
         gridItem.addEventListener('mouseover', () => {
-            gridItem.classList.add("etched");
+            let randomColor = Math.floor(Math.random()*16777215).toString(16);
+            gridItem.style.backgroundColor = `#${randomColor}`;
         });
         row.appendChild(gridItem);
     }
 }
 
+
 function resetGrid() {
     userPrompt = prompt("How many squares on each side?");
+    if (userPrompt > 100) return;
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild)
     }
     createRows(gridContainer);
 }
+
 let userPrompt = 16;
 createRows(gridContainer);
 

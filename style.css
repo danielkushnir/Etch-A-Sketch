@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #df2020;
+    background-color: #ebb3b3;
 }
 
 #mainContainer {
@@ -25,7 +25,7 @@ h1 {
 
 #container {
     background-color: #fff;
-    border: 1px black solid;
+    box-shadow: 5px 5px 25px #aaa;
     text-align: center;
     display: flex;
     justify-content: center;
