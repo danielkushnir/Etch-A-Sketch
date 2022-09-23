@@ -17,14 +17,15 @@ function createGridItems(row) {
     for (let i = 0; i < userPrompt; i++) {
         let gridItem = document.createElement('div');
         gridItem.classList.add('grid-item');
-        gridItem.addEventListener('mouseover', () => {
-            let randomColor = Math.floor(Math.random()*16777215).toString(16);
-            gridItem.style.backgroundColor = `#${randomColor}`;
-        });
+        gridItem.addEventListener('mouseover', etchRandomColor);
         row.appendChild(gridItem);
     }
 }
 
+function etchRandomColor(gridItem) {
+    let randomColor = Math.floor(Math.random()*16777215).toString(16);
+    gridItem.target.style.backgroundColor = `#${randomColor}`;
+}
 
 function resetGrid() {
     userPrompt = prompt("How many squares on each side?");
