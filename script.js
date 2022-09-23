@@ -1,7 +1,3 @@
-const gridContainer = document.createElement('div');
-gridContainer.id = "container";
-document.querySelector('#mainContainer').appendChild(gridContainer);
-
 
 
 function createRows(container) {
@@ -20,9 +16,16 @@ function createGridItems(row) {
     for (let i = 0; i < userPrompt; i++) {
         let gridItem = document.createElement('div');
         gridItem.classList.add('grid-item');
-        gridItem.addEventListener('mouseover', etchGrayColor);
+        gridItem.addEventListener('mouseover', etchRandomColor);
         row.appendChild(gridItem);
     }
+}
+
+function resetGrid() {
+    userPrompt = 16;
+    gridSquareSliderLabel.textContent = 16;
+    gridSquareSlider.value = 16;
+    createRows(gridContainer);
 }
 
 function etchRandomColor(gridItem) {
@@ -32,20 +35,13 @@ function etchRandomColor(gridItem) {
 
 function etchGrayColor(gridItem) {
     let randomColor = Math.floor(Math.random()*256).toString(16);
-
     gridItem.target.style.backgroundColor = `#${randomColor}${randomColor}${randomColor}`;
 }
 
-function resetGrid() {
-    userPrompt = 16;
-    createRows(gridContainer);
-}
-
-function colorMode() {
+function rainbowMode() {
     createRows(gridContainer);
     const gridItems = document.querySelectorAll(".grid-item");
     gridItems.forEach((gridItem) => gridItem.addEventListener('mouseover', etchRandomColor));
-
 }
 
 function grayscaleMode() {
@@ -54,14 +50,18 @@ function grayscaleMode() {
     gridItems.forEach((gridItem) => gridItem.addEventListener('mouseover', etchGrayColor));
 }
 
+const gridContainer = document.createElement('div');
+gridContainer.id = "container";
+document.querySelector('#mainContainer').appendChild(gridContainer);
+
 let userPrompt = 16;
 createRows(gridContainer);
 
-const changeGridBtn = document.querySelector("#changeGridBtn");
-changeGridBtn.addEventListener("click", resetGrid);
+const resetGridBtn = document.querySelector("#resetGridBtn");
+resetGridBtn.addEventListener("click", resetGrid);
 
-const colorModeBtn = document.querySelector("#colorModeBtn");
-colorModeBtn.addEventListener('click', colorMode);
+const rainbowModeBtn = document.querySelector("#rainbowModeBtn");
+rainbowModeBtn.addEventListener('click', rainbowMode);
 
 const grayscaleModeBtn = document.querySelector("#grayscaleModeBtn");
 grayscaleModeBtn.addEventListener('click', grayscaleMode);
