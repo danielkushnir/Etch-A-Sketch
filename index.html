@@ -9,9 +9,17 @@
     <title>Etch-A-Sketch</title>
 </head>
 <body>
+    <h1>Etch-A-Sketch</h1>
     <div id="mainContainer">
-        <h1>Etch-A-Sketch</h1>
-        <button id="changeGridBtn">Reset Grid</button>
+        <div id="buttonPanel">
+            <h3>Panel</h3>
+            <button id="changeGridBtn">Reset Grid</button>
+            <button id="colorModeBtn">Color Mode</button>
+            <button id="grayscaleModeBtn">Grayscale Mode</button>
+            <p>Number of Squares</p>
+            <label for="gridSquareSlider" id="gridSquareSliderLabel"></label>
+            <input type="range" name="gridSquareSlider" id="gridSquareSlider" min="1" value="16" max="60">
+        </div>
     </div>
 </body>
 </html>
