@@ -16,16 +16,25 @@ function createGridItems(row) {
         gridItem.classList.add('grid-item');
         if (modeSwitch === 'rainbow') {
             gridItem.style.backgroundColor = '#FFF';
+            gridItem.removeEventListener('click', etchGrayColor);
+            gridItem.removeEventListener('click', etchSingleColor);
+            gridItem.addEventListener('click', etchRandomColor);   
             gridItem.removeEventListener('mouseover', etchGrayColor);
             gridItem.removeEventListener('mouseover', etchSingleColor);
             gridItem.addEventListener('mouseover', etchRandomColor);
         } else if (modeSwitch === 'grayscale') {
             gridItem.style.backgroundColor = '#FFF';
+            gridItem.removeEventListener('click', etchRandomColor);
+            gridItem.removeEventListener('click', etchSingleColor);
+            gridItem.addEventListener('click', etchGrayColor);
             gridItem.removeEventListener('mouseover', etchRandomColor);
             gridItem.removeEventListener('mouseover', etchSingleColor);
             gridItem.addEventListener('mouseover', etchGrayColor);
         } else if (modeSwitch === 'singleColor') {
             gridItem.style.backgroundColor = '#FFF';
+            gridItem.removeEventListener('click', etchRandomColor);
+            gridItem.removeEventListener('click', etchGrayColor);
+            gridItem.addEventListener('click', etchSingleColor);
             gridItem.removeEventListener('mouseover', etchRandomColor);
             gridItem.removeEventListener('mouseover', etchGrayColor);
             gridItem.addEventListener('mouseover', etchSingleColor);
@@ -55,6 +64,7 @@ function etchSingleColor(e) {
 }
 
 function clearGrid() {
+    const gridItems = document.querySelectorAll(".grid-item");
     gridItems.forEach((gridItem) => {
         gridItem.style.backgroundColor = '#FFF';
     });
@@ -72,7 +82,9 @@ function rainbowMode() {
     modeSwitch = 'rainbow';
     const gridItems = document.querySelectorAll(".grid-item");
     gridItems.forEach((gridItem) => {
-        gridItem.style.backgroundColor = '#FFF';
+        gridItem.removeEventListener('click', etchGrayColor);
+        gridItem.removeEventListener('click', etchSingleColor);
+        gridItem.addEventListener('click', etchRandomColor);
         gridItem.removeEventListener('mouseover', etchGrayColor);
         gridItem.removeEventListener('mouseover', etchSingleColor);
         gridItem.addEventListener('mouseover', etchRandomColor);
@@ -83,7 +95,9 @@ function grayscaleMode() {
     modeSwitch = 'grayscale';
     const gridItems = document.querySelectorAll(".grid-item");
     gridItems.forEach((gridItem) => {
-        gridItem.style.backgroundColor = '#FFF';
+        gridItem.removeEventListener('click', etchRandomColor);
+        gridItem.removeEventListener('click', etchSingleColor);
+        gridItem.addEventListener('click', etchGrayColor);
         gridItem.removeEventListener('mouseover', etchRandomColor);
         gridItem.removeEventListener('mouseover', etchSingleColor);
         gridItem.addEventListener('mouseover', etchGrayColor);
@@ -94,7 +108,9 @@ function singleColorMode() {
     modeSwitch = 'singleColor';
     const gridItems = document.querySelectorAll(".grid-item");
     gridItems.forEach((gridItem) => {
-        gridItem.style.backgroundColor = '#FFF';
+        gridItem.removeEventListener('click', etchRandomColor);
+        gridItem.removeEventListener('click', etchGrayColor);
+        gridItem.addEventListener('click', etchSingleColor);
         gridItem.removeEventListener('mouseover', etchRandomColor);
         gridItem.removeEventListener('mouseover', etchGrayColor);
         gridItem.addEventListener('mouseover', etchSingleColor);
@@ -123,6 +139,9 @@ grayscaleModeBtn.addEventListener('click', grayscaleMode);
 
 const colorPickerBtn = document.querySelector("#colorPicker");
 colorPickerBtn.addEventListener('input', singleColorMode);
+
+const clearBtn = document.querySelector("#clearBtn");
+clearBtn.addEventListener('click', clearGrid)
 
 const gridSquareSliderLabel = document.querySelector("#gridSquareSliderLabel");
 const gridSquareSlider = document.querySelector("#gridSquareSlider");

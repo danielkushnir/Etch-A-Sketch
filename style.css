@@ -77,3 +77,13 @@ p {
 .etched {
     background-color: black;
 }
+
+#colorPicker {
+    width: 80px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+#grayscaleModeBtn:focus, #rainbowModeBtn:focus, #colorPicker {
+    border: 1px solid white;
+}
