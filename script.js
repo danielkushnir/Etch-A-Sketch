@@ -22,7 +22,7 @@ function createGridItems(row) {
             gridItem.removeEventListener('mouseover', etchGrayColor);
             gridItem.removeEventListener('mouseover', etchSingleColor);
             gridItem.addEventListener('mouseover', etchRandomColor);
-        } else if (modeSwitch === 'grayscale') {
+        } else if (modeSwitch === 'shading') {
             gridItem.style.backgroundColor = '#FFF';
             gridItem.removeEventListener('click', etchRandomColor);
             gridItem.removeEventListener('click', etchSingleColor);
@@ -44,21 +44,29 @@ function createGridItems(row) {
 }
 
 function etchRandomColor(e) {
-    if (e.buttons === 1) {
+    if (e.buttons === 1 || e.type === 'click') {
         let randomColor = Math.floor(Math.random()*16777215).toString(16);
         e.target.style.backgroundColor = `#${randomColor}`;
     } 
 }
 
 function etchGrayColor(e) {
-    if (e.buttons === 1) {
-        let randomColor = Math.floor(Math.random()*256).toString(16);
-        e.target.style.backgroundColor = `#${randomColor}${randomColor}${randomColor}`;
+    if (e.buttons === 1 || e.type === 'click') {
+        let currentColor = e.target.style.backgroundColor;
+        currentColor = currentColor.substring(4, currentColor.length-1)
+                                   .replace(/ /g, '')
+                                   .split(',')[0];
+        console.log(currentColor);
+        if (currentColor > 0) {
+            currentColor -= 25;
+            if (currentColor < 0) currentColor = 0;
+            e.target.style.backgroundColor = `rgb(${currentColor}, ${currentColor}, ${currentColor})`;
+        }
     }
 }
 
 function etchSingleColor(e) {
-    if (e.buttons === 1) {
+    if (e.buttons === 1 || e.type === 'click') {
         e.target.style.backgroundColor = `${colorPickerBtn.value}`;
     } 
 }
@@ -91,8 +99,8 @@ function rainbowMode() {
     });
 }
 
-function grayscaleMode() {
-    modeSwitch = 'grayscale';
+function shadingMode() {
+    modeSwitch = 'shading';
     const gridItems = document.querySelectorAll(".grid-item");
     gridItems.forEach((gridItem) => {
         gridItem.removeEventListener('click', etchRandomColor);
@@ -134,8 +142,8 @@ resetGridBtn.addEventListener("click", resetGrid);
 const rainbowModeBtn = document.querySelector("#rainbowModeBtn");
 rainbowModeBtn.addEventListener('click', rainbowMode);
 
-const grayscaleModeBtn = document.querySelector("#grayscaleModeBtn");
-grayscaleModeBtn.addEventListener('click', grayscaleMode);
+const shadingModeBtn = document.querySelector("#shadingModeBtn");
+shadingModeBtn.addEventListener('click', shadingMode);
 
 const colorPickerBtn = document.querySelector("#colorPicker");
 colorPickerBtn.addEventListener('input', singleColorMode);
