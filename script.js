@@ -17,11 +17,18 @@ function createGridItems(row) {
         if (modeSwitch === 'rainbow') {
             gridItem.style.backgroundColor = '#FFF';
             gridItem.removeEventListener('mouseover', etchGrayColor);
+            gridItem.removeEventListener('mouseover', etchSingleColor);
             gridItem.addEventListener('mouseover', etchRandomColor);
         } else if (modeSwitch === 'grayscale') {
             gridItem.style.backgroundColor = '#FFF';
             gridItem.removeEventListener('mouseover', etchRandomColor);
+            gridItem.removeEventListener('mouseover', etchSingleColor);
             gridItem.addEventListener('mouseover', etchGrayColor);
+        } else if (modeSwitch === 'singleColor') {
+            gridItem.style.backgroundColor = '#FFF';
+            gridItem.removeEventListener('mouseover', etchRandomColor);
+            gridItem.removeEventListener('mouseover', etchGrayColor);
+            gridItem.addEventListener('mouseover', etchSingleColor);
         }
         row.appendChild(gridItem);
     }
@@ -41,6 +48,18 @@ function etchGrayColor(e) {
     }
 }
 
+function etchSingleColor(e) {
+    if (e.buttons === 1) {
+        e.target.style.backgroundColor = `${colorPickerBtn.value}`;
+    } 
+}
+
+function clearGrid() {
+    gridItems.forEach((gridItem) => {
+        gridItem.style.backgroundColor = '#FFF';
+    });
+}
+
 function resetGrid() {
     modeSwitch = 'rainbow';
     userPrompt = 16;
@@ -55,6 +74,7 @@ function rainbowMode() {
     gridItems.forEach((gridItem) => {
         gridItem.style.backgroundColor = '#FFF';
         gridItem.removeEventListener('mouseover', etchGrayColor);
+        gridItem.removeEventListener('mouseover', etchSingleColor);
         gridItem.addEventListener('mouseover', etchRandomColor);
     });
 }
@@ -65,7 +85,19 @@ function grayscaleMode() {
     gridItems.forEach((gridItem) => {
         gridItem.style.backgroundColor = '#FFF';
         gridItem.removeEventListener('mouseover', etchRandomColor);
+        gridItem.removeEventListener('mouseover', etchSingleColor);
         gridItem.addEventListener('mouseover', etchGrayColor);
+    });
+}
+
+function singleColorMode() {
+    modeSwitch = 'singleColor';
+    const gridItems = document.querySelectorAll(".grid-item");
+    gridItems.forEach((gridItem) => {
+        gridItem.style.backgroundColor = '#FFF';
+        gridItem.removeEventListener('mouseover', etchRandomColor);
+        gridItem.removeEventListener('mouseover', etchGrayColor);
+        gridItem.addEventListener('mouseover', etchSingleColor);
     });
 }
 
@@ -88,6 +120,9 @@ rainbowModeBtn.addEventListener('click', rainbowMode);
 
 const grayscaleModeBtn = document.querySelector("#grayscaleModeBtn");
 grayscaleModeBtn.addEventListener('click', grayscaleMode);
+
+const colorPickerBtn = document.querySelector("#colorPicker");
+colorPickerBtn.addEventListener('input', singleColorMode);
 
 const gridSquareSliderLabel = document.querySelector("#gridSquareSliderLabel");
 const gridSquareSlider = document.querySelector("#gridSquareSlider");
