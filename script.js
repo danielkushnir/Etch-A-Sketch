@@ -1,5 +1,3 @@
-
-
 function createRows(container) {
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild);
@@ -16,46 +14,71 @@ function createGridItems(row) {
     for (let i = 0; i < userPrompt; i++) {
         let gridItem = document.createElement('div');
         gridItem.classList.add('grid-item');
-        gridItem.addEventListener('mouseover', etchRandomColor);
+        if (modeSwitch === 'rainbow') {
+            gridItem.style.backgroundColor = '#FFF';
+            gridItem.removeEventListener('mouseover', etchGrayColor);
+            gridItem.addEventListener('mouseover', etchRandomColor);
+        } else if (modeSwitch === 'grayscale') {
+            gridItem.style.backgroundColor = '#FFF';
+            gridItem.removeEventListener('mouseover', etchRandomColor);
+            gridItem.addEventListener('mouseover', etchGrayColor);
+        }
         row.appendChild(gridItem);
     }
 }
 
+function etchRandomColor(e) {
+    if (e.buttons === 1) {
+        let randomColor = Math.floor(Math.random()*16777215).toString(16);
+        e.target.style.backgroundColor = `#${randomColor}`;
+    } 
+}
+
+function etchGrayColor(e) {
+    if (e.buttons === 1) {
+        let randomColor = Math.floor(Math.random()*256).toString(16);
+        e.target.style.backgroundColor = `#${randomColor}${randomColor}${randomColor}`;
+    }
+}
+
 function resetGrid() {
+    modeSwitch = 'rainbow';
     userPrompt = 16;
     gridSquareSliderLabel.textContent = 16;
     gridSquareSlider.value = 16;
     createRows(gridContainer);
 }
 
-function etchRandomColor(gridItem) {
-    let randomColor = Math.floor(Math.random()*16777215).toString(16);
-    gridItem.target.style.backgroundColor = `#${randomColor}`;
-}
-
-function etchGrayColor(gridItem) {
-    let randomColor = Math.floor(Math.random()*256).toString(16);
-    gridItem.target.style.backgroundColor = `#${randomColor}${randomColor}${randomColor}`;
-}
-
 function rainbowMode() {
-    createRows(gridContainer);
+    modeSwitch = 'rainbow';
     const gridItems = document.querySelectorAll(".grid-item");
-    gridItems.forEach((gridItem) => gridItem.addEventListener('mouseover', etchRandomColor));
+    gridItems.forEach((gridItem) => {
+        gridItem.style.backgroundColor = '#FFF';
+        gridItem.removeEventListener('mouseover', etchGrayColor);
+        gridItem.addEventListener('mouseover', etchRandomColor);
+    });
 }
 
 function grayscaleMode() {
-    createRows(gridContainer);
+    modeSwitch = 'grayscale';
     const gridItems = document.querySelectorAll(".grid-item");
-    gridItems.forEach((gridItem) => gridItem.addEventListener('mouseover', etchGrayColor));
+    gridItems.forEach((gridItem) => {
+        gridItem.style.backgroundColor = '#FFF';
+        gridItem.removeEventListener('mouseover', etchRandomColor);
+        gridItem.addEventListener('mouseover', etchGrayColor);
+    });
 }
+
+function setNumOfSquares() {
+    gridSquareSliderLabel.textContent = gridSquareSlider.value;
+    userPrompt = gridSquareSlider.value;
+    createRows(gridContainer);
+}
+
 
 const gridContainer = document.createElement('div');
 gridContainer.id = "container";
 document.querySelector('#mainContainer').appendChild(gridContainer);
-
-let userPrompt = 16;
-createRows(gridContainer);
 
 const resetGridBtn = document.querySelector("#resetGridBtn");
 resetGridBtn.addEventListener("click", resetGrid);
@@ -69,9 +92,6 @@ grayscaleModeBtn.addEventListener('click', grayscaleMode);
 const gridSquareSliderLabel = document.querySelector("#gridSquareSliderLabel");
 const gridSquareSlider = document.querySelector("#gridSquareSlider");
 gridSquareSliderLabel.textContent = gridSquareSlider.value;
-gridSquareSlider.addEventListener('input', () => {
-    gridSquareSliderLabel.textContent = gridSquareSlider.value;
-    userPrompt = gridSquareSlider.value;
-    createRows(gridContainer);
-});
+gridSquareSlider.addEventListener('input', setNumOfSquares);
 
+resetGrid();
